@@ -114,12 +114,12 @@ public class JavaBean {
         }
     }
 
-    public String upload() throws IOException {
+    public void upload() throws IOException {
 
-        if (pathExists) {
+//        if (pathExists) {
             file.write(destination + getFileName(file));
 
-            if (zip) {
+//            if (zip) {
 
                 String file2Unzip = destination + "/" + getFileName(file);
                 String folderPath = file2Unzip.substring(0, file2Unzip.lastIndexOf('.'));
@@ -128,11 +128,9 @@ public class JavaBean {
                 File ZipFile2Delete;
                 ZipFile2Delete = new File(file2Unzip);
                 deleteFile(ZipFile2Delete);
-            }
-            return "success";
+//            }
         }
-        return "fail";
-    }
+//    }
 
     public String getFileName(Part part) {
         for (String cd : part.getHeader("Content-Disposition").split(";")) {
