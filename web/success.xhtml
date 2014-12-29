@@ -7,8 +7,7 @@
     </h:head>
     <h:body>
         <h1>HANA Cloud Platform File Uploader</h1>
-        <!--Zip file was uploaded successfully to HCP destination #{javaBean.destination}!-->
-        #{javaBean.b} #{javaBean.folder} ttt
+        File <b>#{javaBean.getFileName(javaBean.file)}</b> was uploaded successfully to HANA Cloud Platform destination <b>#{javaBean.destination}</b>
     </h:body>
 </html>
 

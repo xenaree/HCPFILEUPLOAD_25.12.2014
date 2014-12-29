@@ -2,10 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>HCP File Uploader</title>
+        <style>
 
+        </style>
     </h:head>
     <script>
         function getFolder() {
@@ -15,16 +18,60 @@
         }
     </script>
     <h:body>
-        <h1>HANA Cloud Platform File Uploader3</h1>
-        <h:form enctype="multipart/form-data">
-            <h:inputText value="#{javaBean.folder}" id="folderpath"/>
-            <input type="button" value="Browse..." onclick="this.form.folderpath.value = getFolder()"/><br/>
-            <h:commandButton value="Zip Folder" action="#{javaBean.zipFolder()}"/><br/>
+        <h1>HANA Cloud Platform File Uploader</h1>
 
-            <h:inputFile value="#{javaBean.file}" id="filepath"/><br/>
-            Specify the destination path:<h:inputText value="#{javaBean.destination}"/><br/>
-            <h:commandLink value="Upload to Cloud" action="#{javaBean.upload()}"/>
+        <h:form enctype="multipart/form-data" class="STYLE-NAME">
+
+            <fieldset>
+                <legend>
+                    Zip a folder.
+                </legend>
+                <p>
+                    To upload folder to the HANA Cloud Plateform, the folder must be converted to a zip file<br/>
+                    The zip file will be unzipped automatically into the server.
+                </p>
+                <table>
+                    <tr>
+                        <td>Select Folder to Zip:</td>
+                        <td><h:inputText value="#{javaBean.folder}" id="folderpath"/><input type="button" value="Browse..." onclick="this.form.folderpath.value = getFolder()"/></td>
+                        <td><h:commandButton value="Zip Folder" action="#{javaBean.zipFolder()}"/></td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    Upload file to cloud
+                </legend>
+                <b>Upload a file to HANA Cloud Platform.
+                    If the option <i>Unzip To Cloud</i> is selected, The file will be unziped into the server.</b>
+                <table>
+                    <tr>
+                        <td>Select File to Upload:</td>
+                        <td><h:inputFile value="#{javaBean.file}" id="filepath"/></td>
+                    </tr>
+                    <tr>
+                        <td>Specify the destination path:</td>
+                        <td>
+                            <h:inputText value="#{javaBean.destination}"/>
+                            <h:commandLink value="Check" action="#{javaBean.checkFolderPath()}"/>
+                            <h:outputLabel value="#{javaBean.label}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><h:selectBooleanCheckbox value="#{javaBean.zip}" /> <i>Unzip File to HANA Cloud </i></td>
+                    </tr>
+                    <tr>
+                        <td><h:commandButton type="submit" value="Upload to Cloud" action="#{javaBean.upload()}"/></td>
+                    </tr>
+                </table>
+
+            </fieldset>
+
         </h:form>
+        <br/><br/>
+
+
     </h:body>
 </html>
 

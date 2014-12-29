@@ -9,10 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-
-
-
-
+import net.lingala.zip4j.unzip.Unzip;
 
 @ManagedBean
 @SessionScoped
@@ -22,24 +19,33 @@ public class JavaBean {
     private String folder;
     private String destination;
     private Part file;
-    private boolean b;
-    public String b1 ="eee";
+    private boolean pathExists;
+    private boolean zip;
+    private String label;
 
-    public boolean isB() {
-        return b;
-    }
-  public void setB(boolean b) {
-        this.b = b;
-    }
-    public void setB1(String b1) {
-        this.b1 = b1;
-    }
-        public String isB1() {
-        return b1;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-  
-    
+    public String getLabel() {
+        return label;
+    }
+
+    public void setZip(boolean zip) {
+        this.zip = zip;
+    }
+
+    public boolean isZip() {
+        return zip;
+    }
+
+    public boolean isPathExists() {
+        return pathExists;
+    }
+
+    public void setPathExists(boolean pathExists) {
+        this.pathExists = pathExists;
+    }
 
     public void setDestination(String Destination) {
         this.destination = Destination;
@@ -72,38 +78,61 @@ public class JavaBean {
         List<File> fileList = new ArrayList<File>();
         ZipDirectory.getAllFiles(directoryToZip, fileList);
         ZipDirectory.writeZipFile(directoryToZip, fileList);
+    }
 
-//        File zipFile = new File(directoryToZip+".zip");
-        
-//        HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        
-        
-//        UnZip zipFile = new UnZip();
-//        zipFile.unZipIt("E:\\MyFilee.zip", "E:\\outputzip2");
-
-//return "success";
-//        
-//        return "fail";
+    public void unzipFolder(String File2Unzip, String Directory) throws IOException {
+        UnzipDirectory unzipFile = new UnzipDirectory();
+        unzipFile.unzip(File2Unzip, Directory);
 
     }
-    
-    public String upload() throws IOException{
-        
-        File F = new File(destination);
-       try { 
-        b= F.exists();
-        SecurityManager s= new SecurityManager();
-        s.checkRead(destination);
-      }catch(SecurityException e){
-      folder= e.getMessage();
-      }
-//        Process p = Runtime.getRuntime().exec("pwd");
-//        String s = p.getInputStream().toString();
-//        file.write(destination+getFileName(file));
-        return "success";
+
+    public void deleteFile(File File2Delete) {
+        try {
+            File2Delete.delete();
+        } catch (Exception e) {
+
+        }
+
     }
-    
-    
+
+    public void checkFolderPath() {
+
+        if (destination != "") {
+            String substring = destination.substring(Math.max(destination.length() - 1, 0));
+            if (!substring.equals("\\")) {
+                label = "Path should be ..\\folder\\";
+            } else {
+                File F = new File(destination);
+                pathExists = F.exists();
+                if (pathExists) {
+                    label = "  Path is valid!";
+                } else {
+                    label = "  Folder not found!";
+                }
+
+            }
+        }
+    }
+
+    public String upload() throws IOException {
+
+        if (pathExists) {
+            file.write(destination + getFileName(file));
+
+            if (zip) {
+
+                String file2Unzip = destination + "/" + getFileName(file);
+                String folderPath = file2Unzip.substring(0, file2Unzip.lastIndexOf('.'));
+                unzipFolder(file2Unzip, folderPath);
+
+                File ZipFile2Delete;
+                ZipFile2Delete = new File(file2Unzip);
+                deleteFile(ZipFile2Delete);
+            }
+            return "success";
+        }
+        return "fail";
+    }
 
     public String getFileName(Part part) {
         for (String cd : part.getHeader("Content-Disposition").split(";")) {
@@ -114,9 +143,6 @@ public class JavaBean {
         }
         return null;
 
-        
     }
-    
-   
 
 }
