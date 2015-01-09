@@ -11,16 +11,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class ZipDirectory {
-//    public static void main(String[] args) throws IOException {
-//		File directoryToZip = new File("D:\\folderToZip");
-//
-//		List<File> fileList = new ArrayList<File>();
-//		System.out.println("---Getting references to all files in: " + directoryToZip.getCanonicalPath());
-//		getAllFiles(directoryToZip, fileList);
-//		System.out.println("---Creating zip file");
-//		writeZipFile(directoryToZip, fileList);
-//		System.out.println("---Done");
-//	}
 
 	public static void getAllFiles(File dir, List<File> fileList) {
 		try {

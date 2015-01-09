@@ -22,33 +22,34 @@
         <header role="banner" id="siteheader">
             <div class="contentwrapper">
                 <a href="/" class="colspan5">
-
-                    <img src="img/sap.png" height="41" width="80" alt="SAP logo" class="logo"/>
+                    <!--<h:graphicImage library="images" name="sap.png"  height="41" width="80" alt="SAP logo" class="logo"/>-->
+                    <!--<img src="resources/images/sap.png" height="41" width="80" alt="SAP logo" class="logo"/>-->
                     <h1>SAP HANA Cloud Platform</h1>
                 </a>
             </div>
         </header>
 
-        <h:form enctype="multipart/form-data">
-            <div role="main" id="pagecontent" class="contentwrapper">
-            </div>
-            <div class="contentwrapper">
-                <section class="offerings panel boxes">
-                    <div class="panelheading center">
-                        <h1>HANA Cloud Platform File Uploader</h1>
-                    </div>
-                    <article class="box arrow-list">
-                        <figure>
-                            <img src="img/folder.png" width="70" alt=""/>
-                        </figure>
-                        <div class="textbit">
-                            <h2 class="faux_h3">
-                                <a href="#">Zip Folder before upload</a>
-                            </h2>
-                            <p>
-                                In order to upload a folder to HANA Cloud Platform, 
-                                the folder must be transformed into a zip file.<br/>
-                            </p>
+        <!--<h:form enctype="multipart/form-data">-->
+        <div role="main" id="pagecontent" class="contentwrapper">
+        </div>
+        <div class="contentwrapper">
+            <section class="offerings panel boxes">
+                <div class="panelheading center">
+                    <h1>Jenkins Cloud File Uploader</h1>
+                </div>
+                <article class="box arrow-list">
+                    <figure>
+                        <!--<img src="img/folder.png" width="70" alt=""/>-->
+                    </figure>
+                    <div class="textbit">
+                        <h2 class="faux_h3">
+                            <a href="#">Zip Folder before upload</a>
+                        </h2>
+                        <p>
+                            In order to upload a folder to HANA Cloud Platform, 
+                            the folder must be transformed into a zip file.<br/>
+                        </p>
+                        <h:form enctype="multipart/form-data">
 
                             <b>Browse to directory</b><br/>
                             <input type="button" value="Browse..." onclick="this.form.folderpath.value = getFolder()"/>
@@ -56,24 +57,27 @@
                             <b>Or, enter path manually</b><br/>
                             <h:inputText value="#{javaBean.folder}" id="folderpath"/>
                             <br/><br/>
-                            <h:commandButton value="Zip Folder" action="#{javaBean.zipFolder()}"/>
+                            <h:commandButton type="submit" value="Zip Folder" action="#{javaBean.zipFolder()}"/>
                             <br/>
                             <i>The folder will be zipped under the same parent directory.</i>
-                        </div>
-                    </article>
-                    <article class="box arrow-list">
-                        <figure>
-                            <img src="img/upload.png" width="70" alt=""/>
-                        </figure>
-                        <div class="textbit">
-                            <h2 class="faux_h3">
-                                <a href="#">Upload To Cloud</a>
-                            </h2>
-                            <p>
-                                Select the option <b><i>Unzip 2 Cloud</i></b> if you want to unzip your file directly
-                                into the cloud.<br/>
-                                Without selecting this option the file will be uploaded as it is.
-                            </p>
+                        </h:form>
+                    </div>
+                </article>
+                <article class="box arrow-list">
+                    <figure>
+                        <!--<img src="img/upload.png" width="70" alt=""/>-->
+                    </figure>
+                    <div class="textbit">
+                        <h2 class="faux_h3">
+                            <a href="#">Upload To Cloud</a>
+                        </h2>
+                        <p>
+                            Select the option <b><i>Unzip 2 Cloud</i></b> if you want to unzip your file directly
+                            into the cloud.<br/>
+                            Without selecting this option the file will be uploaded as it is.
+                        </p>
+                        <h:form enctype="multipart/form-data">
+
                             <b>File to upload</b><br/>
                             <h:inputFile value="#{javaBean.file}" id="filepath"/>
                             <br/><br/>
@@ -82,18 +86,18 @@
                             <br/>
                             <h:commandLink value="Check directoy" action="#{javaBean.checkFolderPath()}"/>
                             <br/>
-                            <h:outputLabel value="#{javaBean.label}"/>
-                            <br/>
                             <h:selectBooleanCheckbox value="#{javaBean.zip}" /> <b><i>Unzip 2 Cloud </i></b>
                             <br/>
                             <h:commandButton type="submit" value="Upload to Cloud" action="#{javaBean.upload()}"/>
+                        </h:form>
+                    </div>
+                </article>
+            </section>
+            <h:outputLabel value="#{javaBean.label}" style="color: red"/>
 
-                        </div>
-                    </article>
+        </div>
 
-                </section>
-            </div>
-        </h:form>
+        <!--</h:form>-->
         <br/><br/>
 
 

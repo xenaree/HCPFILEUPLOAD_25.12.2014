@@ -12,8 +12,6 @@ import javax.servlet.http.Part;
 import net.lingala.zip4j.unzip.Unzip;
 
 @ManagedBean
-@SessionScoped
-@RequestScoped
 public class JavaBean {
 
     private String folder;
@@ -73,11 +71,17 @@ public class JavaBean {
 
     public void zipFolder() throws IOException {
 
-        File directoryToZip = new File(folder);
+        if (folder.equals("")) {
+            label = "Please specify a folder to zip";
+        } else {
 
-        List<File> fileList = new ArrayList<File>();
-        ZipDirectory.getAllFiles(directoryToZip, fileList);
-        ZipDirectory.writeZipFile(directoryToZip, fileList);
+            File directoryToZip = new File(folder);
+
+            List<File> fileList = new ArrayList<File>();
+            ZipDirectory.getAllFiles(directoryToZip, fileList);
+            ZipDirectory.writeZipFile(directoryToZip, fileList);
+            label = "Folder Zipped succesfully";
+        }
     }
 
     public void unzipFolder(String File2Unzip, String Directory) throws IOException {
@@ -116,11 +120,12 @@ public class JavaBean {
 
     public void upload() throws IOException {
 
+//        checkFolderPath();
 //        if (pathExists) {
             file.write(destination + getFileName(file));
+//            label = "File uploaded succesfully";
 
-//            if (zip) {
-
+            if (zip) {
                 String file2Unzip = destination + "/" + getFileName(file);
                 String folderPath = file2Unzip.substring(0, file2Unzip.lastIndexOf('.'));
                 unzipFolder(file2Unzip, folderPath);
@@ -128,9 +133,11 @@ public class JavaBean {
                 File ZipFile2Delete;
                 ZipFile2Delete = new File(file2Unzip);
                 deleteFile(ZipFile2Delete);
-//            }
-        }
-//    }
+                label = "Zip file unzippped succesfully into the server";
+
+            }
+//        }
+    }
 
     public String getFileName(Part part) {
         for (String cd : part.getHeader("Content-Disposition").split(";")) {
